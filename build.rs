@@ -46,7 +46,9 @@ fn codegen_tables(mut out: BufWriter<File>) -> BufWriter<File> {
         .into_iter()
         .map(|(k, v)| {
             (
-                u16::from_str_radix(k.as_str(), 10).expect(&format!("can parse {k} as u16")),
+                k.as_str()
+                    .parse::<u16>()
+                    .unwrap_or_else(|_| panic!("can parse {k} as u16")),
                 v,
             )
         })
@@ -346,7 +348,7 @@ fn codegen_definitions(mut out: BufWriter<File>) -> BufWriter<File> {
     .expect("can write to codegen.rs");
     writeln!(
         &mut out,
-        "pub static VERSIONS: &'static [&'static str] = &[{}];",
+        "pub static VERSIONS: &[&str] = &[{}];",
         definitions
             .keys()
             .map(|k| format!(r#""{k}""#))
@@ -360,7 +362,7 @@ fn codegen_definitions(mut out: BufWriter<File>) -> BufWriter<File> {
 
 fn main() {
     let path = Path::new(&env::var("OUT_DIR").unwrap()).join("codegen.rs");
-    let mut out = BufWriter::new(File::create(&path).unwrap());
+    let mut out = BufWriter::new(File::create(path).unwrap());
 
     writeln!(&mut out, "#[allow(unused)]\npub mod codegen {{\nuse super::*;\npub type TableValues = phf::Map<&'static str, &'static str>;").expect("can write to codegen.rs");
     let out = codegen_tables(out);

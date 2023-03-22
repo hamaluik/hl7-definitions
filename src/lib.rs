@@ -31,7 +31,7 @@ pub fn table_description(table: u16) -> Option<&'static str> {
 pub fn table_value(table: u16, key: &'static str) -> Option<&'static str> {
     codegen::TABLES
         .get(&table)
-        .and_then(|table| table.get(&key).copied())
+        .and_then(|table| table.get(key).copied())
 }
 
 /// Get _all_ the values for a given table
