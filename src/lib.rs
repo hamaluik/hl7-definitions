@@ -277,7 +277,7 @@ mod tests {
 
     #[test]
     fn can_list_versions() {
-        assert!(VERSIONS.iter().find(|v| *v == &"2.5.1").is_some());
+        assert!(VERSIONS.iter().any(|v| v == &"2.5.1"));
     }
 
     #[test]
