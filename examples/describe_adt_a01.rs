@@ -24,7 +24,7 @@ fn print_message_segment(segment: &MessageSegment) {
     }
     println!(":");
 
-    match get_segment("2.5.1", segment.name) {
+    match get_segment("2.3", segment.name) {
         Some(seg) => print_fields(segment.name, seg),
         None => {
             if let Some(children) = segment.children {
@@ -35,7 +35,7 @@ fn print_message_segment(segment: &MessageSegment) {
 }
 
 pub fn main() {
-    let a01 = get_message("2.5.1", "ADT_A01").expect("Can get A01 message");
+    let a01 = get_message("2.3", "ADT_A01").expect("Can get A01 message");
     println!("{} ({}) segments:", a01.name, a01.description);
     a01.segments.iter().for_each(print_message_segment)
 }

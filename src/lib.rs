@@ -294,7 +294,7 @@ mod tests {
         assert_eq!(ad.subfields.len(), 8);
         assert_eq!(ad.subfields[0].datatype, "ST");
         assert_eq!(ad.subfields[0].description, "Street Address");
-        assert_eq!(ad.subfields[0].optionality, FieldOptionality::Required);
+        assert_eq!(ad.subfields[0].optionality, FieldOptionality::Optional);
         assert_eq!(ad.subfields[0].repeatability, FieldRepeatability::Single);
         assert_eq!(ad.subfields[0].max_length, Some(120));
         assert_eq!(ad.subfields[0].table, None);

@@ -227,12 +227,7 @@ fn codegen_definitions(mut out: BufWriter<File>) -> BufWriter<File> {
                         len,
                         table,
                     } = s;
-                    let opt = match opt {
-                        0 => "FieldOptionality::Optional",
-                        1 => "FieldOptionality::Required",
-                        2 => "FieldOptionality::Conditional",
-                        _ => "FieldOptionality::BackwardCompatibility",
-                    };
+                    let opt = map_optionality(*opt);
                     let rep = match rep {
                         0 => "FieldRepeatability::Unbounded".to_string(),
                         1 => "FieldRepeatability::Single".to_string(),
@@ -265,12 +260,7 @@ fn codegen_definitions(mut out: BufWriter<File>) -> BufWriter<File> {
                 .iter()
                 .map(|f| {
                     let SubField { datatype, desc, opt, rep, len, table } = f;
-                    let opt = match opt {
-                        0 => "FieldOptionality::Optional",
-                        1 => "FieldOptionality::Required",
-                        2 => "FieldOptionality::Conditional",
-                        _ => "FieldOptionality::BackwardCompatibility",
-                    };
+                    let opt = map_optionality(*opt);
                     let rep = match rep {
                         0 => "FieldRepeatability::Unbounded".to_string(),
                         1 => "FieldRepeatability::Single".to_string(),
@@ -358,6 +348,15 @@ fn codegen_definitions(mut out: BufWriter<File>) -> BufWriter<File> {
     .expect("can write to codegen.rs");
 
     out
+}
+
+fn map_optionality(opt: usize) -> &'static str {
+    match opt {
+        1 => "FieldOptionality::Optional",
+        2 => "FieldOptionality::Required",
+        3 => "FieldOptionality::Conditional",
+        _ => "FieldOptionality::BackwardCompatibility",
+    }
 }
 
 fn main() {
