@@ -49,6 +49,7 @@ pub fn table_values(table: u16) -> Option<&'static [(&'static str, &'static str)
 
 /// The root definition for a given version, describing the schema for that HL7 version
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Definition {
     /// All the possible fields / datatypes that are present in the version
     pub fields: &'static Map<&'static str, Field>,
@@ -60,6 +61,7 @@ pub struct Definition {
 
 /// How "required" is the field
 #[derive(Copy, Clone, PartialEq, Eq, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum FieldOptionality {
     /// The field is optional
     Optional,
@@ -84,6 +86,7 @@ impl Display for FieldOptionality {
 
 /// How many times a field can be repeated
 #[derive(Copy, Clone, PartialEq, Eq, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum FieldRepeatability {
     /// The field can be repeated to infinity
     Unbounded,
@@ -106,6 +109,7 @@ impl Display for FieldRepeatability {
 /// A field type (could be an HL7 field, component, or sub-component depending on its usage),
 /// effectively a datatype
 #[derive(Copy, Clone, PartialEq, Eq, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Field {
     /// The description of the field
     pub description: &'static str,
@@ -115,6 +119,7 @@ pub struct Field {
 
 /// Generally the lowest-level datatype, represents what a component or sub-component can be
 #[derive(Copy, Clone, PartialEq, Eq, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct SubField {
     /// The datatype (field) of the sub-field
     pub datatype: &'static str,
@@ -132,6 +137,7 @@ pub struct SubField {
 
 /// Schema for a segment (`MSH`, `PID`, etc)
 #[derive(Copy, Clone, PartialEq, Eq, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Segment {
     /// The description of the segment
     pub description: &'static str,
@@ -141,6 +147,7 @@ pub struct Segment {
 
 /// Schema for a mesasge (`ADT_A01`, etc)
 #[derive(Copy, Clone, PartialEq, Eq, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Message {
     /// A description of the message
     pub description: &'static str,
@@ -152,6 +159,7 @@ pub struct Message {
 
 /// A segment within a message
 #[derive(Copy, Clone, PartialEq, Eq, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct MessageSegment {
     /// The name of the segment (3 capital letters)
     pub name: &'static str,
@@ -170,6 +178,7 @@ pub struct MessageSegment {
 }
 
 #[derive(Copy, Clone, PartialEq, Eq, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct MessageCompound {
     pub name: Option<&'static str>,
     pub description: &'static str,
